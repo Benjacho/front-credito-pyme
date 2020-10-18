@@ -75,7 +75,7 @@
                     </v-col>
                     <v-col style="background: white">
                       <div class="pa-10">
-                        <v-form ref="form" align="center">
+                        <v-form ref="form" align="center" @submit.prevent="submit">
                           <h1 style="color: #004481">
                             {{ rightTitle }}
                           </h1>
@@ -85,8 +85,10 @@
                               <div style="p-5">
                                 <v-text-field
                                   v-model="form.ruc"
+                                  :rules="[rules.required]"
                                   label="RUC / DNI"
                                   outlined
+                                  required
                                 >
                                 </v-text-field>
                               </div>
@@ -95,6 +97,7 @@
                               <div style="p-5">
                                 <v-select
                                   v-model="form.reason"
+                                  :rules="[rules.required]"
                                   :items="items"
                                   label="Motivo"
                                   required
@@ -109,8 +112,7 @@
                               <div style="p-5">
                                 <v-text-field
                                   v-model="form.email"
-                                  :counter="max"
-                                  :rules="rules"
+                                  :rules="[rules.required, rules.email]"
                                   label="Email"
                                   outlined
                                   prepend-inner-icon="mdi-email"
@@ -123,7 +125,7 @@
                                 <v-text-field
                                   v-model="form.phone"
                                   :counter="max"
-                                  :rules="rules"
+                                  :rules="[rules.required]"
                                   label="Celular"
                                   outlined
                                   prepend-inner-icon="mdi-phone"
@@ -133,7 +135,7 @@
                             </v-col>
                           </v-row>
                           <v-checkbox
-                            v-model="ex4"
+                            v-model="form.terms"
                             label="He leido y acepto la Politica de tratamiento de Proteccion de datos personales"
                             color="primary"
                             value="primary"
@@ -142,8 +144,10 @@
                           <br /><br />
                           <v-btn
                             @click="e1 = 2"
+                            :disabled="!form1IsValid"
                             color="secondary"
                             elevation="6"
+                            type="submit"
                           >
                             Siguiente
                           </v-btn>
@@ -189,6 +193,7 @@
                                   label="¿Cuántos años lleva como cliente?"
                                   outlined
                                   placeholder="20"
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </v-row>
@@ -212,24 +217,31 @@
                                 "
                               >
                                 <v-input> ¿Desde cuando? </v-input>
-                                <v-date-picker v-model="form.dias_digital">
+                                <v-date-picker 
+                                  v-model="form.dias_digital"
+                                  locale="pe"
+                                >
                                 </v-date-picker>
-                              </v-row>
+                              </v-row><br>
                               <v-row>
                                 <v-text-field
                                   v-model="form.veh_ct"
                                   label="¿Cuántos vehículos posee?"
                                   outlined
                                   placeholder="3"
+                                  :rules="[rules.required]"
+                                  required
                                 >
                                 </v-text-field>
-                              </v-row>
+                              </v-row><br>
                               <v-row>
                                 <v-text-field
                                   v-model="form.veh_year"
                                   label="¿De qué año es su vehículo más reciente?"
                                   outlined
                                   placeholder="2019"
+                                  :rules="[rules.required, rules.veh_year]"
+                                  required
                                 >
                                 </v-text-field>
                               </v-row>
@@ -252,6 +264,7 @@
                                   label="Cantidad"
                                   type="number"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -263,6 +276,7 @@
                                   label="Monto Total"
                                   type="number"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -280,6 +294,7 @@
                                   label="Cantidad"
                                   type="number"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -291,6 +306,7 @@
                                   label="Monto Total"
                                   type="number"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -303,6 +319,7 @@
                                   v-model="form.employees_number"
                                   label="Número de empleados"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -313,6 +330,7 @@
                                   v-model="form.monthly_income"
                                   label="Facturación Mensual Promedio"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -325,6 +343,7 @@
                                   v-model="form.branches_number"
                                   label="Número de Sucursales, si es que la tiene"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -336,6 +355,7 @@
                                   label="Año de fundación de la empresa"
                                   placeholder="2020"
                                   outlined
+                                  :rules="[rules.required]"
                                 >
                                 </v-text-field>
                               </div>
@@ -450,6 +470,7 @@ export default {
         reason: "",
         email: "",
         phone: "",
+        terms: false,
         traspaso_entre_ctes_ct: 0,
         traspaso_entre_ctes_sm: 0,
         trasf_env_ct: 0,
@@ -477,13 +498,35 @@ export default {
         veh_ct: "",
         veh_year: "",
         birth_date: "",
-	  },
+    },
+    rules: {
+      required: value => !!value || 'Debe rellenar este campo.',
+      ruc: [val => (val || '').length > 0 || 'Debe rellenar este campo'],
+      email: value => {
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return pattern.test(value) || 'E-mail inválido.'
+      },
+      veh_year: [val => (val || '').length < 4 || '4 digitos']
+    },
 	  amount_prediction: 0,
       url:
         "http://flask-env.eba-mp2pq4fm.us-east-1.elasticbeanstalk.com/api/predict",
       urlNode: "http://heroku.dev/whatever",
     };
   },
+
+  computed: {
+    form1IsValid () {
+      return (
+        this.form.ruc &&
+        this.form.reason &&
+        this.form.email &&
+        this.form.phone &&
+        this.form.terms
+      )
+    },
+  },
+
   methods: {
     generateCredit() {
       delete this.form["ruc"];
