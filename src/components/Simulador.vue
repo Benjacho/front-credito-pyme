@@ -29,7 +29,7 @@
                         style="background-image: url('https://www.bbva.pe/content/dam/public-web/peru/photos/cards/card-tarjetas-credito-banco.jpg.img.2400.1568845101129.jpg'); height:100%; background-size: cover; background-position: center center; "
                         class="img_init pt-10"
                       >
-                        <div style="filter:brightness(2);">
+                        <div>
                           <h1 align="center" class="pl-0">{{ leftTitle }}</h1>
                           <br /><br /><br>
                           <div class="pl-15">
@@ -164,13 +164,14 @@
                 <v-btn text> Cancel </v-btn> -->
               </v-stepper-content>
 
-              <v-stepper-content step="2">
-                <v-card>
+              <v-stepper-content step="2" style="background-color: #1d73b2">
+                <v-card outlined >
+                  <h1 class="pl-10 pt-10" style="color: #1d73b2">Rellene los campos</h1>
                   <v-row>
                     <v-col>
                       <div
                         style="background-color: white; color: white"
-                        class="pa-10"
+                        class="pl-10"
                       >
                         <v-form ref="form" align="center">
                           <v-col>
@@ -587,7 +588,7 @@ export default {
   .img_init{
     position: relative;
     z-index: 1;
-    color: #f4f4f4;
+    color: #EAEFF6;
   }
 
   .img_init::after{
