@@ -26,50 +26,52 @@
                   <v-row>
                     <v-col>
                       <div
-                        style="background-color: #004481; color: white; height:100%"
-                        class="pt-10"
+                        style="background-image: url('https://www.bbva.pe/content/dam/public-web/peru/photos/cards/card-tarjetas-credito-banco.jpg.img.2400.1568845101129.jpg'); height:100%; background-size: cover; background-position: center center; "
+                        class="img_init pt-10"
                       >
-                        <h1 align="center" class="pl-0">{{ leftTitle }}</h1>
-                        <br /><br /><br>
-                        <div class="pl-15">
-                          <v-layout>
-                            <p class="pr-5">
-                              <v-img
-                                class="pa-0 ma-0"
-                                width="30"
-                                src="https://d3n8a8pro7vhmx.cloudfront.net/afl/pages/2551/attachments/original/1429911676/white-checkmark-in-circle-md.png?1429911676"
-                              ></v-img>
-                            </p>
-                            <h2>
-                              {{ check1 }}
-                            </h2>
-                          </v-layout>
-                          <br /><br />
-                          <v-layout>
-                            <p class="pr-5">
-                              <v-img
-                                class="pa-0 ma-0"
-                                width="30"
-                                src="https://d3n8a8pro7vhmx.cloudfront.net/afl/pages/2551/attachments/original/1429911676/white-checkmark-in-circle-md.png?1429911676"
-                              ></v-img>
-                            </p>
-                            <h2>
-                              {{ check2 }}
-                            </h2>
-                          </v-layout>
-                          <br /><br />
-                          <v-layout>
-                            <p class="pr-5">
-                              <v-img
-                                class="pa-0 ma-0"
-                                width="30"
-                                src="https://d3n8a8pro7vhmx.cloudfront.net/afl/pages/2551/attachments/original/1429911676/white-checkmark-in-circle-md.png?1429911676"
-                              ></v-img>
-                            </p>
-                            <h2>
-                              {{ check3 }}
-                            </h2>
-                          </v-layout>
+                        <div style="filter:brightness(2);">
+                          <h1 align="center" class="pl-0">{{ leftTitle }}</h1>
+                          <br /><br /><br>
+                          <div class="pl-15">
+                            <v-layout>
+                              <p class="pr-5">
+                                <v-img
+                                  class="pa-0 ma-0"
+                                  width="30"
+                                  src="https://d3n8a8pro7vhmx.cloudfront.net/afl/pages/2551/attachments/original/1429911676/white-checkmark-in-circle-md.png?1429911676"
+                                ></v-img>
+                              </p>
+                              <h2>
+                                {{ check1 }}
+                              </h2>
+                            </v-layout>
+                            <br /><br />
+                            <v-layout>
+                              <p class="pr-5">
+                                <v-img
+                                  class="pa-0 ma-0"
+                                  width="30"
+                                  src="https://d3n8a8pro7vhmx.cloudfront.net/afl/pages/2551/attachments/original/1429911676/white-checkmark-in-circle-md.png?1429911676"
+                                ></v-img>
+                              </p>
+                              <h2>
+                                {{ check2 }}
+                              </h2>
+                            </v-layout>
+                            <br /><br />
+                            <v-layout>
+                              <p class="pr-5">
+                                <v-img
+                                  class="pa-0 ma-0"
+                                  width="30"
+                                  src="https://d3n8a8pro7vhmx.cloudfront.net/afl/pages/2551/attachments/original/1429911676/white-checkmark-in-circle-md.png?1429911676"
+                                ></v-img>
+                              </p>
+                              <h2>
+                                {{ check3 }}
+                              </h2>
+                            </v-layout>
+                          </div>
                         </div>
                       </div>
                     </v-col>
@@ -579,3 +581,24 @@ export default {
   },
 };
 </script>
+
+<style>
+
+  .img_init{
+    position: relative;
+    z-index: 1;
+    color: #f4f4f4;
+  }
+
+  .img_init::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    z-index:-1;
+  }
+
+</style>
