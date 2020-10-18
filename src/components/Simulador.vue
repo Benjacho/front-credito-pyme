@@ -26,12 +26,17 @@
                   <v-row>
                     <v-col>
                       <div
-                        style="background-image: url('https://www.bbva.pe/content/dam/public-web/peru/photos/cards/card-tarjetas-credito-banco.jpg.img.2400.1568845101129.jpg'); height:100%; background-size: cover; background-position: center center; "
+                        style="
+                          background-image: url('https://www.bbva.pe/content/dam/public-web/peru/photos/cards/card-tarjetas-credito-banco.jpg.img.2400.1568845101129.jpg');
+                          height: 100%;
+                          background-size: cover;
+                          background-position: center center;
+                        "
                         class="img_init pt-10"
                       >
                         <div>
                           <h1 align="center" class="pl-0">{{ leftTitle }}</h1>
-                          <br /><br /><br>
+                          <br /><br /><br />
                           <div class="pl-15">
                             <v-layout>
                               <p class="pr-5">
@@ -77,7 +82,11 @@
                     </v-col>
                     <v-col style="background: white">
                       <div class="pa-10">
-                        <v-form ref="form" align="center" @submit.prevent="submit">
+                        <v-form
+                          ref="form"
+                          align="center"
+                          @submit.prevent="submit"
+                        >
                           <h1 style="color: #004481">
                             {{ rightTitle }}
                           </h1>
@@ -165,8 +174,10 @@
               </v-stepper-content>
 
               <v-stepper-content step="2" style="background-color: #1d73b2">
-                <v-card outlined >
-                  <h1 class="pl-10 pt-10" style="color: #1d73b2">Rellene los campos</h1>
+                <v-card outlined>
+                  <h1 class="pl-10 pt-10" style="color: #1d73b2">
+                    Rellene los campos
+                  </h1>
                   <v-row>
                     <v-col>
                       <div
@@ -220,12 +231,12 @@
                                 "
                               >
                                 <v-input> ¿Desde cuando? </v-input>
-                                <v-date-picker 
+                                <v-date-picker
                                   v-model="form.dias_digital"
                                   locale="pe"
                                 >
-                                </v-date-picker>
-                              </v-row><br>
+                                </v-date-picker> </v-row
+                              ><br />
                               <v-row>
                                 <v-text-field
                                   v-model="form.veh_ct"
@@ -235,8 +246,8 @@
                                   :rules="[rules.required]"
                                   required
                                 >
-                                </v-text-field>
-                              </v-row><br>
+                                </v-text-field> </v-row
+                              ><br />
                               <v-row>
                                 <v-text-field
                                   v-model="form.veh_year"
@@ -390,7 +401,7 @@
                   class="mx-auto"
                   color="secondary"
                   width="600px"
-                  style="color: white;"
+                  style="color: white"
                   elevation="24"
                   shaped
                 >
@@ -399,51 +410,60 @@
                     height="250"
                     src="https://www.bbva.pe/content/dam/public-web/peru/photos/cards/card-productos-digitales-mayo.png.img.2400.1599837443512.png"
                   ></v-img>
-                  <div
-                    class="pa-15"
-                  >
-                  <v-card-text>
-                    <h1>Detalles</h1><br>
-                    <hr/><br><br>
-                    <v-row>
-                      <v-col>
-                        <h2>{{Math.round(amount_prediction)}}</h2>
-                        <label style="font-size: 14px;">Monto del préstamo</label><br><br>
-                      </v-col>
-                      <v-col>
-                        <h2>{{Math.round(amount_prediction / 18)}}</h2>
-                        <label style="font-size: 14px;">Cuota mensual</label>
-                      </v-col>
-                    </v-row>
-                    <h3>29.34%</h3>
-                    <label style="font-size: 14px;">Tasa de interés</label><br><br>
-                    <h3>18 meses</h3>
-                    <label style="font-size: 14px;">Plazo de financiamiento</label><br><br><br>
-                    <p>
-                      La empresa tiene la obligación de difundir información de conformidad con la Ley Nº 28587 y/o sus modificatorias.
-                    </p>
-                    <h3>INFORMACION REFERENCIAL</h3>
-                    <p align="justify" class="pt-4">
-                      Este simulador tiene carácter referencial, por lo tanto no es vinculante ni constituye declaración ni genera responsabilidad para el BBVA. Las cuotas del cronograma definitivo pueden variar respecto de las indicadas en este simulador en función a la aprobación crediticia, a las fechas de desembolso y al número de días considerados en el periodo de gracia.
-                    </p><br>
-                    <v-btn
-                      elevation="3"
-                      large
-                      rounded
-                    >
-                      Ver Cronograma
-                      <v-icon
-                        right
-                        dark
-                      >
-                        mdi-calendar
-                      </v-icon>
-                    </v-btn>
-                  </v-card-text>
+                  <div class="pa-15">
+                    <v-card-text>
+                      <h1>Detalles</h1>
+                      <br />
+                      <hr />
+                      <br /><br />
+                      <v-row>
+                        <v-col>
+                          <h2>{{ Math.round(amount_prediction) }}</h2>
+                          <label style="font-size: 14px"
+                            >Monto del préstamo</label
+                          ><br /><br />
+                        </v-col>
+                        <v-col>
+                          <h2>
+                            {{ Math.round((amount_prediction * 1.29) / 12) }}
+                          </h2>
+                          <label style="font-size: 14px"
+                            >Cuota mensual Aproximada</label
+                          >
+                        </v-col>
+                      </v-row>
+                      <h3>12 meses</h3>
+                      <label style="font-size: 14px"
+                        >Plazo de financiamiento</label
+                      ><br /><br /><br />
+                      <p>
+                        La empresa tiene la obligación de difundir información
+                        de conformidad con la Ley Nº 28587 y/o sus
+                        modificatorias.
+                      </p>
+                      <h3>INFORMACION REFERENCIAL</h3>
+                      <p align="justify" class="pt-4">
+                        Este simulador tiene carácter referencial, por lo tanto
+                        no es vinculante ni constituye declaración ni genera
+                        responsabilidad para el BBVA. Las cuotas del cronograma
+                        definitivo pueden variar respecto de las indicadas en
+                        este simulador en función a la aprobación crediticia, a
+                        las fechas de desembolso y al número de días
+                        considerados en el periodo de gracia.
+                      </p>
+                      <br />
+                      <h3 style="font-size: 12px">29.34%</h3>
+                      <label style="font-size: 12px">Tasa de interés</label
+                      ><br /><br />
+                      <!-- <v-btn disabled elevation="3" large rounded>
+                        Ver Cronograma
+                        <v-icon right dark> mdi-calendar </v-icon>
+                      </v-btn> -->
+                    </v-card-text>
                   </div>
                 </v-card>
-                <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
-                <v-btn text> Cancel </v-btn>
+                <!-- <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
+                <v-btn text> Cancel </v-btn> -->
               </v-stepper-content>
             </v-stepper-items>
           </v-stepper>
@@ -466,7 +486,12 @@ export default {
       check2: "Tu crédito a un solo paso",
       check3: "Solicita",
       rightTitle: "INGRESA TUS DATOS",
-      items: ["Motivo 1", "Motivo 2", "Motivo 3", "Motivo 4"],
+      items: [
+        "Crecimiento Empresarial",
+        "Pago a Proveedores",
+        "Pago de Nóminas",
+        "Liquidez",
+      ],
       date: null,
       form: {
         ruc: "",
@@ -496,22 +521,22 @@ export default {
         // max_pen_billing_last_amount: 0, // These should be calculated based on their monthly income
         is_client: "",
         seniority_company_years_number: "",
-        u_digital_affiliation_type: "",
+        u_digital_affiliation_type: 0,
         u_sms_affiliation_type: "",
         veh_ct: "",
         veh_year: "",
         birth_date: "",
-    },
-    rules: {
-      required: value => !!value || 'Debe rellenar este campo.',
-      ruc: [val => (val || '').length > 0 || 'Debe rellenar este campo'],
-      email: value => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return pattern.test(value) || 'E-mail inválido.'
       },
-      veh_year: [val => (val || '').length < 4 || '4 digitos']
-    },
-	  amount_prediction: 0,
+      rules: {
+        required: (value) => !!value || "Debe rellenar este campo.",
+        ruc: [(val) => (val || "").length > 0 || "Debe rellenar este campo"],
+        email: (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "E-mail inválido.";
+        },
+        veh_year: [(val) => (val || "").length < 4 || "4 digitos"],
+      },
+      amount_prediction: 0,
       url:
         "http://flask-env.eba-mp2pq4fm.us-east-1.elasticbeanstalk.com/api/predict",
       urlNode: "http://heroku.dev/whatever",
@@ -519,27 +544,29 @@ export default {
   },
 
   computed: {
-    form1IsValid () {
+    form1IsValid() {
       return (
         this.form.ruc &&
         this.form.reason &&
         this.form.email &&
         this.form.phone &&
         this.form.terms
-      )
+      );
     },
   },
 
   methods: {
     generateCredit() {
+      this.url = "http://127.0.0.1:5000/api/predict";
+
       delete this.form["ruc"];
       delete this.form["reason"];
       delete this.form["email"];
       delete this.form["phone"];
       this.form["monthly_income"] = this.form["monthly_income"] / 500;
       delete this.form["is_client"];
-	  delete this.form["seniority_company_years_number"];
-	  delete this.form['terms'];
+      delete this.form["seniority_company_years_number"];
+      delete this.form["terms"];
 
       let days = 0;
       this.form["dias_online"] = days; //////// This should be calculated reducing number of days
@@ -556,8 +583,8 @@ export default {
       axios
         .post(this.url, this.form)
         .then((result) => {
-		  this.e1 = 3;
-		  this.amount_prediction = result.data.predictions[0]
+          this.e1 = 3;
+          this.amount_prediction = result.data.predictions[0];
           console.log("result", result);
         })
         .catch((error) => {
@@ -565,6 +592,7 @@ export default {
         });
     },
     saveUserData() {
+      this.url = "http://127.0.0.1:5000/api/predict";
       this.formUser["ruc"] = this.form["ruc"];
       this.formUser["reason"] = this.form["reason"];
       this.formUser["email"] = this.form["email"];
@@ -585,22 +613,20 @@ export default {
 </script>
 
 <style>
+.img_init {
+  position: relative;
+  z-index: 1;
+  color: #eaeff6;
+}
 
-  .img_init{
-    position: relative;
-    z-index: 1;
-    color: #EAEFF6;
-  }
-
-  .img_init::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.7);
-    z-index:-1;
-  }
-
+.img_init::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
 </style>
