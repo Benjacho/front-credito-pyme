@@ -133,19 +133,16 @@
                         class="pa-10"
                       >
                         <v-form ref="form" align="center">
-                          <h1>
-                            {{ rightTitle }}
-                          </h1>
-                          <br />
                             <v-col>
                               <div align="center">
                                 <v-row >
                                     <v-input>
                                     ¿Ud. es cliente del BBVA?
-                                    </v-input>
+                                    
                                     <v-radio-group
                                       v-model="form.is_client"
                                       row
+                                      class="pl-10"
                                     >
                                       <v-radio
                                         label="Si"
@@ -156,27 +153,24 @@
                                         value="no"
                                       ></v-radio>
                                     </v-radio-group>
+                                    </v-input>
                                 </v-row>
                                 <v-row v-if="form.is_client === 'si'">
-                                  <v-input>
-                                    ¿Cuántos años lleva como cliente?
-                                  </v-input>
                                   <v-text-field
                                     v-model="form.seniority_company_years_number"
-                                    :counter="max"
-                                    :rules="rules"
-                                    label="ej. 20"
+                                    label="¿Cuántos años lleva como cliente?"
                                     outlined
+                                    placeholder="20"
                                   >
                                   </v-text-field>
                                 </v-row>
                                 <v-row v-if="form.is_client === 'si'">
                                   <v-input>
                                     ¿Está afiliado de forma digital?
-                                  </v-input>
                                   <v-radio-group
                                     v-model="form.u_digital_affiliation_type"
                                     row
+                                    class="pl-10"
                                   >
                                     <v-radio
                                       label="Si"
@@ -187,6 +181,7 @@
                                       value="no"
                                     ></v-radio>
                                   </v-radio-group>
+                                  </v-input>
                                 </v-row>
                                 <v-row v-if="form.u_digital_affiliation_type === 'si' && form.is_client === 'si'">
                                   <v-input>
@@ -196,28 +191,20 @@
                                   </v-date-picker>
                                 </v-row>
                                 <v-row>
-                                  <v-input>
-                                    ¿Cuántos vehículos posee?
-                                  </v-input>
                                   <v-text-field
                                     v-model="form.veh_ct"
-                                    :counter="max"
-                                    :rules="rules"
-                                    label="ej. 4"
+                                    label="¿Cuántos vehículos posee?"
                                     outlined
+                                    placeholder="3"
                                   >
                                   </v-text-field>
                                 </v-row>
                                 <v-row>
-                                  <v-input>
-                                    ¿De qué año es su vehículo más reciente?
-                                  </v-input>
                                   <v-text-field
                                     v-model="form.veh_year"
-                                    :counter="max"
-                                    :rules="rules"
-                                    label="ej. 2018"
+                                    label="¿De qué año es su vehículo más reciente?"
                                     outlined
+                                    placeholder="2019"
                                   >
                                   </v-text-field>
                                 </v-row>
