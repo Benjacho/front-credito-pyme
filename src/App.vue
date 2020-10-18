@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+      height="80"
+    >
       <div class="d-flex align-center pl-5">
         <v-img
           alt="Vuetify Logo"
@@ -8,7 +13,7 @@
           contain
           src="https://www.bbva.pe/content/dam/public-web/global/images/logos/logo_bbva_blanco.svg"
           transition="scale-transition"
-          width="150"
+          width="130"
         />
 
         <!--<v-img
