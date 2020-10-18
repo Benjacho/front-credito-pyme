@@ -364,25 +364,55 @@ export default {
         employees_number: 0,
         monthly_income: 0,
         branches_number: 0,
+        min_usd_billing_last_amount: 0, // Start of variables that have less cardinality and are guessed
+        u_sms_affiliation_type: 0,
+        max_usd_billing_last_amount: 0, // This and min shoulb be calculed based on their monthly income
+        traspaso_ctas_ct: 0,
+        traspaso_ctas_sm: 0,
+        ranking_last_number: 0,
+        dias_sms: 0,
+        market_share_per: 0, //This should be considered based on shared market pbi
+        pbi_sector_last_per: 0,
+        trasf_rec_ct: 0,
+        min_pen_billing_last_amount: 0,
+        max_pen_billing_last_amount: 0, // These should be calculated based on their monthly income
       },
       url:
         "http://flask-env.eba-mp2pq4fm.us-east-1.elasticbeanstalk.com/api/predict",
+      urlNode: "http://heroku.dev/whatever",
     };
   },
   methods: {
     generateCredit() {
-	  this.url = "http://127.0.0.1:5000/api/predict"; //override for now
-	  delete this.form['ruc']
-	  delete this.form['reason']
-	  delete this.form['email']
-	  delete this.form['phone']
+      this.url = "http://127.0.0.1:5000/api/predict"; //override for now
+      delete this.form["ruc"];
+      delete this.form["reason"];
+      delete this.form["email"];
+      delete this.form["phone"];
       axios
         .post(this.url, this.form)
         .then((result) => {
-          console.log(result);
+			this.e1 = 3
+          	console.log("result", result);
         })
         .catch((error) => {
-          console.log(error);
+          console.log("error", error);
+        });
+    },
+    saveUserData() {
+      this.formUser["ruc"] = this.form["ruc"];
+      this.formUser["reason"] = this.form["reason"];
+      this.formUser["email"] = this.form["email"];
+      this.formUser["phone"] = this.form["phone"];
+      console.log("formUser", formUser);
+      axios
+        .post(this.urlNode, this.formUser)
+        .then((result) => {
+			this.e1 = 2 // We save date when we are on boarding.
+			console.log("result node", result);
+        })
+        .catch((error) => {
+          	console.log("result node", error);
         });
     },
   },
