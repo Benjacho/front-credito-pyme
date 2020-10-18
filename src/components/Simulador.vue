@@ -133,78 +133,77 @@
                         class="pa-10"
                       >
                         <v-form ref="form" align="center">
-                          <h1>
-                            {{ rightTitle }}
-                          </h1>
                           <br />
-                          <v-row>
-                            <v-col>
-                              <div style="p-5">
+                          <v-col>
+                            <div align="center">
+                              <v-row>
+                                <v-input> ¿Ud. es cliente del BBVA? </v-input>
+                                <v-radio-group v-model="form.is_client" row>
+                                  <v-radio label="Si" value="si"></v-radio>
+                                  <v-radio label="No" value="no"></v-radio>
+                                </v-radio-group>
+                              </v-row>
+                              <v-row v-if="form.is_client === 'si'">
+                                <v-input>
+                                  ¿Cuántos años lleva como cliente?
+                                </v-input>
                                 <v-text-field
-                                  v-model="form.ruc"
-                                  label="RUC / DNI"
-                                  outlined
-                                >
-                                </v-text-field>
-                              </div>
-                            </v-col>
-                            <v-col>
-                              <div style="p-5">
-                                <v-select
-                                  v-model="form.reason"
-                                  :items="items"
-                                  :rules="[(v) => !!v || 'Item is required']"
-                                  label="Motivo"
-                                  required
-                                  outlined
-                                >
-                                </v-select>
-                              </div>
-                            </v-col>
-                          </v-row>
-                          <v-row>
-                            <v-col>
-                              <div style="p-5">
-                                <v-text-field
-                                  v-model="form.email"
+                                  v-model="form.seniority_company_years_number"
                                   :counter="max"
                                   :rules="rules"
-                                  label="Email"
+                                  label="ej. 20"
                                   outlined
-                                  prepend-inner-icon="mdi-email"
                                 >
                                 </v-text-field>
-                              </div>
-                            </v-col>
-                            <v-col>
-                              <div style="p-5">
+                              </v-row>
+                              <v-row v-if="form.is_client === 'si'">
+                                <v-input>
+                                  ¿Está afiliado de forma digital?
+                                </v-input>
+                                <v-radio-group
+                                  v-model="form.u_digital_affiliation_type"
+                                  row
+                                >
+                                  <v-radio label="Si" value="si"></v-radio>
+                                  <v-radio label="No" value="no"></v-radio>
+                                </v-radio-group>
+                              </v-row>
+                              <v-row
+                                v-if="
+                                  form.u_digital_affiliation_type === 'si' &&
+                                  form.is_client === 'si'
+                                "
+                              >
+                                <v-input> ¿Desde cuando? </v-input>
+                                <v-date-picker v-model="form.dias_digital">
+                                </v-date-picker>
+                              </v-row>
+                              <v-row>
+                                <v-input> ¿Cuántos vehículos posee? </v-input>
                                 <v-text-field
-                                  v-model="form.phone"
+                                  v-model="form.veh_ct"
                                   :counter="max"
                                   :rules="rules"
-                                  label="Celular"
+                                  label="ej. 4"
                                   outlined
-                                  prepend-inner-icon="mdi-phone"
                                 >
                                 </v-text-field>
-                              </div>
-                            </v-col>
-                          </v-row>
-                          <v-checkbox
-                            v-model="ex4"
-                            label="He leido y acepto la Politica de tratamiento de Proteccion de datos personales"
-                            color="primary"
-                            value="primary"
-                            hide-details
-                          ></v-checkbox>
-                          <br /><br />
-                          <v-btn
-                            @click="e1 = 2"
-                            color="secondary"
-                            elevation="6"
-                          >
-                            Siguiente
-                          </v-btn>
+                              </v-row>
+                              <v-row>
+                                <v-input>
+                                  ¿De qué año es su vehículo más reciente?
+                                </v-input>
+                                <v-text-field
+                                  v-model="form.veh_year"
+                                  :counter="max"
+                                  :rules="rules"
+                                  label="ej. 2018"
+                                  outlined
+                                >
+                                </v-text-field>
+                              </v-row>
+                            </div>
+                          </v-col>
                         </v-form>
                       </div>
                     </v-col>
@@ -376,6 +375,12 @@ export default {
         trasf_rec_ct: 0,
         min_pen_billing_last_amount: 0,
         max_pen_billing_last_amount: 0, // These should be calculated based on their monthly income
+        is_client: "",
+        seniority_company_years_number: "",
+        u_digital_affiliation_type: "",
+        dias_digital: "",
+        veh_ct: "",
+        veh_year: "",
       },
       url:
         "http://flask-env.eba-mp2pq4fm.us-east-1.elasticbeanstalk.com/api/predict",
@@ -392,8 +397,8 @@ export default {
       axios
         .post(this.url, this.form)
         .then((result) => {
-			this.e1 = 3
-          	console.log("result", result);
+          this.e1 = 3;
+          console.log("result", result);
         })
         .catch((error) => {
           console.log("error", error);
@@ -408,11 +413,11 @@ export default {
       axios
         .post(this.urlNode, this.formUser)
         .then((result) => {
-			this.e1 = 2 // We save date when we are on boarding.
-			console.log("result node", result);
+          this.e1 = 2; // We save date when we are on boarding.
+          console.log("result node", result);
         })
         .catch((error) => {
-          	console.log("result node", error);
+          console.log("result node", error);
         });
     },
   },
