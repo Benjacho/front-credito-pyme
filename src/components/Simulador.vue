@@ -538,7 +538,8 @@ export default {
       delete this.form["phone"];
       this.form["monthly_income"] = this.form["monthly_income"] / 500;
       delete this.form["is_client"];
-      delete this.form["seniority_company_years_number"];
+	  delete this.form["seniority_company_years_number"];
+	  delete this.form['terms'];
 
       let days = 0;
       this.form["dias_online"] = days; //////// This should be calculated reducing number of days
