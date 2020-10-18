@@ -133,72 +133,69 @@
                         class="pa-10"
                       >
                         <v-form ref="form" align="center">
-                          <br />
                           <v-col>
                             <div align="center">
                               <v-row>
-                                <v-input> ¿Ud. es cliente del BBVA? </v-input>
-                                <v-radio-group v-model="form.is_client" row>
-                                  <v-radio label="Si" value="si"></v-radio>
-                                  <v-radio label="No" value="no"></v-radio>
-                                </v-radio-group>
+                                <v-input>
+                                  ¿Ud. es cliente del BBVA?
+
+                                  <v-radio-group
+                                    v-model="form.is_client"
+                                    row
+                                    class="pl-10"
+                                  >
+                                    <v-radio label="Si" value="si"></v-radio>
+                                    <v-radio label="No" value="no"></v-radio>
+                                  </v-radio-group>
+                                </v-input>
                               </v-row>
                               <v-row v-if="form.is_client === 'si'">
-                                <v-input>
-                                  ¿Cuántos años lleva como cliente?
-                                </v-input>
                                 <v-text-field
                                   v-model="form.seniority_company_years_number"
-                                  :counter="max"
-                                  :rules="rules"
-                                  label="ej. 20"
+                                  label="¿Cuántos años lleva como cliente?"
                                   outlined
+                                  placeholder="20"
                                 >
                                 </v-text-field>
                               </v-row>
                               <v-row v-if="form.is_client === 'si'">
                                 <v-input>
                                   ¿Está afiliado de forma digital?
+                                  <v-radio-group
+                                    v-model="form.u_digital_affiliation_type"
+                                    row
+                                    class="pl-10"
+                                  >
+                                    <v-radio label="Si" value="1"></v-radio>
+                                    <v-radio label="No" value="0"></v-radio>
+                                  </v-radio-group>
                                 </v-input>
-                                <v-radio-group
-                                  v-model="form.u_digital_affiliation_type"
-                                  row
-                                >
-                                  <v-radio label="Si" value="si"></v-radio>
-                                  <v-radio label="No" value="no"></v-radio>
-                                </v-radio-group>
                               </v-row>
                               <v-row
                                 v-if="
-                                  form.u_digital_affiliation_type === 'si' &&
+                                  form.u_digital_affiliation_type === '1' &&
                                   form.is_client === 'si'
                                 "
                               >
                                 <v-input> ¿Desde cuando? </v-input>
-                                <v-date-picker v-model="form.date">
+                                <v-date-picker v-model="form.dias_digital">
                                 </v-date-picker>
                               </v-row>
                               <v-row>
-                                <v-input> ¿Cuántos vehículos posee? </v-input>
                                 <v-text-field
                                   v-model="form.veh_ct"
-                                  :counter="max"
-                                  :rules="rules"
-                                  label="ej. 4"
+                                  label="¿Cuántos vehículos posee?"
                                   outlined
+                                  placeholder="3"
                                 >
                                 </v-text-field>
                               </v-row>
                               <v-row>
-                                <v-input>
-                                  ¿De qué año es su vehículo más reciente?
-                                </v-input>
                                 <v-text-field
                                   v-model="form.veh_year"
-                                  :counter="max"
-                                  :rules="rules"
-                                  label="ej. 2018"
+                                  label="¿De qué año es su vehículo más reciente?"
                                   outlined
+                                  placeholder="2019"
                                 >
                                 </v-text-field>
                               </v-row>
@@ -286,11 +283,24 @@
                                 </v-text-field>
                               </div>
                             </v-col>
+                          </v-row>
+                          <v-row>
                             <v-col>
                               <div style="p-5">
                                 <v-text-field
                                   v-model="form.branches_number"
                                   label="Número de Sucursales, si es que la tiene"
+                                  outlined
+                                >
+                                </v-text-field>
+                              </div>
+                            </v-col>
+                            <v-col>
+                              <div style="p-5">
+                                <v-text-field
+                                  v-model="form.birth_date"
+                                  label="Año de fundación de la empresa"
+                                  placeholder="2020"
                                   outlined
                                 >
                                 </v-text-field>
@@ -364,24 +374,26 @@ export default {
         employees_number: 0,
         monthly_income: 0,
         branches_number: 0,
-        min_usd_billing_last_amount: 0, // Start of variables that have less cardinality and are guessed
-        max_usd_billing_last_amount: 0, // This and min shoulb be calculed based on their monthly income
+        // min_usd_billing_last_amount: 0, // Start of variables that have less cardinality and are guessed
+        // max_usd_billing_last_amount: 0, // This and min shoulb be calculed based on their monthly income
         u_sms_affiliation_type: 0,
         traspaso_ctas_ct: 0,
-        traspaso_ctas_sm: 0,
+        // traspaso_ctas_sm: 0,
         ranking_last_number: 0,
         dias_sms: 0,
         market_share_per: 0, //This should be considered based on shared market pbi
         pbi_sector_last_per: 0,
         trasf_rec_ct: 0,
+        trasf_rec_sm: 0,
         min_pen_billing_last_amount: 0,
-        max_pen_billing_last_amount: 0, // These should be calculated based on their monthly income
+        // max_pen_billing_last_amount: 0, // These should be calculated based on their monthly income
         is_client: "",
         seniority_company_years_number: "",
         u_digital_affiliation_type: "",
         u_sms_affiliation_type: "",
         veh_ct: "",
         veh_year: "",
+        birth_date: "",
       },
       url:
         "http://flask-env.eba-mp2pq4fm.us-east-1.elasticbeanstalk.com/api/predict",
@@ -390,13 +402,15 @@ export default {
   },
   methods: {
     generateCredit() {
-      this.url = "http://127.0.0.1:5000/api/predict"; //override for now
       delete this.form["ruc"];
       delete this.form["reason"];
       delete this.form["email"];
       delete this.form["phone"];
+      this.form["monthly_income"] = this.form["monthly_income"] / 500;
+      delete this.form["is_client"];
+      delete this.form["seniority_company_years_number"];
 
-      let days = 100;
+      let days = 0;
       this.form["dias_online"] = days; //////// This should be calculated reducing number of days
       this.form["dias_digital"] = days;
       this.form["u_sms_affiliation_type"] = this.form[
@@ -406,17 +420,17 @@ export default {
         "u_digital_affiliation_type"
       ];
 
-      console.log(this.form);
+      //   console.log(this.form);
 
-      //   axios
-      //     .post(this.url, this.form)
-      //     .then((result) => {
-      //       this.e1 = 3;
-      //       console.log("result", result);
-      //     })
-      //     .catch((error) => {
-      //       console.log("error", error);
-      //     });
+      axios
+        .post(this.url, this.form)
+        .then((result) => {
+          this.e1 = 3;
+          console.log("result", result);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     },
     saveUserData() {
       this.formUser["ruc"] = this.form["ruc"];
@@ -427,7 +441,7 @@ export default {
       axios
         .post(this.urlNode, this.formUser)
         .then((result) => {
-          this.e1 = 2; // We save date when we are on boarding.
+          this.e1 = 2; // We save data when we are on boarding.
           console.log("result node", result);
         })
         .catch((error) => {
