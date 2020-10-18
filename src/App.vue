@@ -33,21 +33,20 @@
         target="_blank"
         text
       >
-
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <Simulador/>
+      <Simulador />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Simulador from './components/Simulador';
+import Simulador from "./components/Simulador";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     Simulador,
