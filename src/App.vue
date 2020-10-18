@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+    <v-app-bar app color="primary" dark>
       <div class="d-flex align-center pl-5">
         <v-img
           alt="Vuetify Logo"
@@ -32,21 +28,20 @@
         target="_blank"
         text
       >
-
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <Simulador/>
+      <Simulador />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Simulador from './components/Simulador';
+import Simulador from "./components/Simulador";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     Simulador,

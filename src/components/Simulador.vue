@@ -211,16 +211,16 @@
                     <v-col style="background: white">
                       <div class="pa-10">
                         <v-form ref="form" align="center">
-                          <h1>
-                            {{ rightTitle }}
-                          </h1>
-                          <br />
+                          <label
+                            >BBVA: Transferencias que planea realizar</label
+                          >
                           <v-row>
                             <v-col>
                               <div style="p-5">
                                 <v-text-field
-                                  v-model="form.ruc"
-                                  label="RUC / DNI"
+                                  v-model="form.traspaso_entre_ctes_ct"
+                                  label="Cantidad"
+                                  type="number"
                                   outlined
                                 >
                                 </v-text-field>
@@ -228,15 +228,41 @@
                             </v-col>
                             <v-col>
                               <div style="p-5">
-                                <v-select
-                                  v-model="form.reason"
-                                  :items="items"
-                                  :rules="[(v) => !!v || 'Item is required']"
-                                  label="Motivo"
-                                  required
+                                <v-text-field
+                                  v-model="form.traspaso_entre_ctes_sm"
+                                  label="Monto Total"
+                                  type="number"
                                   outlined
                                 >
-                                </v-select>
+                                </v-text-field>
+                              </div>
+                            </v-col>
+                          </v-row>
+                          <label
+                            >Otros Bancos: Transferencias que planea
+                            realizar</label
+                          >
+                          <v-row>
+                            <v-col>
+                              <div style="p-5">
+                                <v-text-field
+                                  v-model="form.trasf_env_ct"
+                                  label="Cantidad"
+                                  type="number"
+                                  outlined
+                                >
+                                </v-text-field>
+                              </div>
+                            </v-col>
+                            <v-col>
+                              <div style="p-5">
+                                <v-text-field
+                                  v-model="form.trasf_env_sm"
+                                  label="Monto Total"
+                                  type="number"
+                                  outlined
+                                >
+                                </v-text-field>
                               </div>
                             </v-col>
                           </v-row>
@@ -244,12 +270,9 @@
                             <v-col>
                               <div style="p-5">
                                 <v-text-field
-                                  v-model="form.email"
-                                  :counter="max"
-                                  :rules="rules"
-                                  label="Email"
+                                  v-model="form.employees_number"
+                                  label="Número de empleados"
                                   outlined
-                                  prepend-inner-icon="mdi-email"
                                 >
                                 </v-text-field>
                               </div>
@@ -257,31 +280,31 @@
                             <v-col>
                               <div style="p-5">
                                 <v-text-field
-                                  v-model="form.phone"
-                                  :counter="max"
-                                  :rules="rules"
-                                  label="Celular"
+                                  v-model="form.monthly_income"
+                                  label="Facturación Mensual Promedio"
                                   outlined
-                                  prepend-inner-icon="mdi-phone"
+                                >
+                                </v-text-field>
+                              </div>
+                            </v-col>
+                            <v-col>
+                              <div style="p-5">
+                                <v-text-field
+                                  v-model="form.branches_number"
+                                  label="Número de Sucursales, si es que la tiene"
+                                  outlined
                                 >
                                 </v-text-field>
                               </div>
                             </v-col>
                           </v-row>
-                          <v-checkbox
-                            v-model="ex4"
-                            label="He leido y acepto la Politica de tratamiento de Proteccion de datos personales"
-                            color="primary"
-                            value="primary"
-                            hide-details
-                          ></v-checkbox>
                           <br /><br />
                           <v-btn
-                            @click="e1 = 2"
+                            @click="generateCredit"
                             color="secondary"
                             elevation="6"
                           >
-                            Siguiente
+                            Generar mi Crédito
                           </v-btn>
                         </v-form>
                       </div>
@@ -289,9 +312,11 @@
                   </v-row>
                 </v-card>
 
-                <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
+                <!-- <v-btn color="primary" @click="e1 = 3">
+                  Generar mi Crédito
+                </v-btn>
 
-                <v-btn text> Cancel </v-btn>
+                <v-btn text> Cancel </v-btn> -->
               </v-stepper-content>
 
               <v-stepper-content step="3">
@@ -314,9 +339,10 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Simulador",
-
   data() {
     return {
       e1: 1,
@@ -331,8 +357,34 @@ export default {
         reason: "",
         email: "",
         phone: "",
+        traspaso_entre_ctes_ct: 0,
+        traspaso_entre_ctes_sm: 0,
+        trasf_env_ct: 0,
+        trasf_env_sm: 0,
+        employees_number: 0,
+        monthly_income: 0,
+        branches_number: 0,
       },
+      url:
+        "http://flask-env.eba-mp2pq4fm.us-east-1.elasticbeanstalk.com/api/predict",
     };
+  },
+  methods: {
+    generateCredit() {
+	  this.url = "http://127.0.0.1:5000/api/predict"; //override for now
+	  delete this.form['ruc']
+	  delete this.form['reason']
+	  delete this.form['email']
+	  delete this.form['phone']
+      axios
+        .post(this.url, this.form)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
