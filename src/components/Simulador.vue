@@ -175,7 +175,7 @@
                                 "
                               >
                                 <v-input> ¿Desde cuando? </v-input>
-                                <v-date-picker v-model="form.dias_digital">
+                                <v-date-picker v-model="form.date">
                                 </v-date-picker>
                               </v-row>
                               <v-row>
@@ -351,6 +351,7 @@ export default {
       check3: "Solicita",
       rightTitle: "INGRESA TUS DATOS",
       items: ["Motivo 1", "Motivo 2", "Motivo 3", "Motivo 4"],
+      date: null,
       form: {
         ruc: "",
         reason: "",
@@ -364,8 +365,8 @@ export default {
         monthly_income: 0,
         branches_number: 0,
         min_usd_billing_last_amount: 0, // Start of variables that have less cardinality and are guessed
-        u_sms_affiliation_type: 0,
         max_usd_billing_last_amount: 0, // This and min shoulb be calculed based on their monthly income
+        u_sms_affiliation_type: 0,
         traspaso_ctas_ct: 0,
         traspaso_ctas_sm: 0,
         ranking_last_number: 0,
@@ -378,7 +379,7 @@ export default {
         is_client: "",
         seniority_company_years_number: "",
         u_digital_affiliation_type: "",
-        dias_digital: "",
+        u_sms_affiliation_type: "",
         veh_ct: "",
         veh_year: "",
       },
@@ -394,15 +395,28 @@ export default {
       delete this.form["reason"];
       delete this.form["email"];
       delete this.form["phone"];
-      axios
-        .post(this.url, this.form)
-        .then((result) => {
-          this.e1 = 3;
-          console.log("result", result);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
+
+      let days = 100;
+      this.form["dias_online"] = days; //////// This should be calculated reducing number of days
+      this.form["dias_digital"] = days;
+      this.form["u_sms_affiliation_type"] = this.form[
+        "u_digital_affiliation_type"
+      ];
+      this.form["u_online_banking_affiliation_type"] = this.form[
+        "u_digital_affiliation_type"
+      ];
+
+      console.log(this.form);
+
+      //   axios
+      //     .post(this.url, this.form)
+      //     .then((result) => {
+      //       this.e1 = 3;
+      //       console.log("result", result);
+      //     })
+      //     .catch((error) => {
+      //       console.log("error", error);
+      //     });
     },
     saveUserData() {
       this.formUser["ruc"] = this.form["ruc"];
